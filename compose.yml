@@ -8,9 +8,8 @@ networks:
       config:
         - subnet: "${APP_NETWORK_POOL}"
 
-volumes:
-  habitat-config:
-  mediamtx-config:
+# volumes:
+#   habitat-config:
 
 # No Secrets, Syntax Stub:
 # secrets:
