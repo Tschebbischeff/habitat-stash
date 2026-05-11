@@ -10,24 +10,7 @@
 Habitat provides modular functionality for deployment on home lab devices. \
 Each of the modules is designed as an opinionated docker stack that can be deployed on its own or together with other modules by sharing the same docker network.
 
-## Available Modules
-
- - **[Path](https://github.com/Tschebbischeff/habitat-path)** \
- Network routing and reverse proxy
- - **[Scent](https://github.com/Tschebbischeff/habitat-scent)** \
- Identity provider, LDAP directory and access control
- - **[Vista](https://github.com/Tschebbischeff/habitat-vista)** \
- Central dashboards and device entry points
- - **[Chatter](https://github.com/Tschebbischeff/habitat-chatter)** \
- Message queue for realtime communication between modules
- - **[Hoard](https://github.com/Tschebbischeff/habitat-hoard)** \
- Time-series database and persistent storage
- - **[Vigil](https://github.com/Tschebbischeff/habitat-vigil)** \
- Device monitoring, visualization and alerting
- - **[Sight](https://github.com/Tschebbischeff/habitat-sight)** \
- Real-time video streaming
- - **[Stash](https://github.com/Tschebbischeff/habitat-stash)** \
- Nextcloud
+You can check out all officially available modules [here](https://github.com/Tschebbischeff/habitat#officially-available-modules).
 
 ## Our Principles
 
@@ -109,20 +92,10 @@ SECRETS_DIR="/run/secrets"
 
 ### Environment Variables
 
-At build-time Docker requires the following environment variables to be populated:
+> [!TIP]
+> Some environment variables are used commonly throughout all modules, you can check the list [here](https://github.com/Tschebbischeff/habitat#environment-variables-for-modules).
 
-| Name | Description | Example | Default |
-| :-- | :-- | :-- | :-- |
-| `APP_HOST` | The main URL the device will be reachable at. | `my-habitat.example.com` | *Empty* |
-| `APP_MODULES` | A comma separated list of module names that are started in the same docker namespace (same project name) as this module. | `path,scent,vista,chatter,hoard,vigil,sight,stash` | *Empty* |
-| `APP_SESSION_ID` | A session ID used for synchronization of configuration between modules, should change every time all modules are restarted in unison and remain unchanged if a single module is restarted without being updated. | `$(cat /proc/sys/kernel/random/uuid)` | *Empty* |
-| `APP_NETWORK_POOL` | The pool of IP addresses for the module containers, must match pool of all other modules in the same application. | `172.19.0.0/16` | `172.18.0.0/16` |
-| `APP_NAME_HOST` | The prefix for all docker networks and containers, that this application will create. Also used as the internal hostname within all containers. | `my-habitat` | `habitat` |
-| `APP_NAME_LABEL` | The human readable name of the device. | `My Habitat` | `Habitat` |
-| `TIMEZONE` | Timezone identifier passed on to containers. | `Europe/Paris` | `Europe/Berlin` |
-| `VOLUME_DIR` | The directory in which [bind mounts](https://docs.docker.com/engine/storage/bind-mounts/) are placed *(Currently only named volumes are used)*. | `/path/to/my/volumes` | `./volumes` |
-| `ENV_DIR` | The directory in which .env files for containers can be placed to override the default runtime config. | `/path/to/my/env` | `./env.d` |
-| `SECRETS_DIR` | The directory in which files containing secrets for containers are placed. | `/run/secret` | `./secrets` |
+*This module does not require any additional environment variables.*
 
 ### Secrets
 
