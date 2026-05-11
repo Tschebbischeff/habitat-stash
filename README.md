@@ -35,14 +35,11 @@ Each of the modules is designed as an opinionated docker stack that can be deplo
 
 ## Module Features
 
-[![Media MTX](https://img.shields.io/badge/Media_MTX-_?style=flat&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiMxQTY1QjciIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1jYW1lcmEtaWNvbiBsdWNpZGUtY2FtZXJhIj48cGF0aCBkPSJNMTMuOTk3IDRhMiAyIDAgMCAxIDEuNzYgMS4wNWwuNDg2LjlBMiAyIDAgMCAwIDE4LjAwMyA3SDIwYTIgMiAwIDAgMSAyIDJ2OWEyIDIgMCAwIDEtMiAySDRhMiAyIDAgMCAxLTItMlY5YTIgMiAwIDAgMSAyLTJoMS45OTdhMiAyIDAgMCAwIDEuNzU5LTEuMDQ4bC40ODktLjkwNEEyIDIgMCAwIDEgMTAuMDA0IDR6Ii8+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMyIgcj0iMyIvPjwvc3ZnPg==&logoColor=1A65B7&logoSize=auto&color=gray&labelColor=gray)](https://mediamtx.org/)
-
- - **Cross-Module Video Streaming** \
- Publish and Subscribe to video feeds via multiple connection protocols
+![TODO](https://img.shields.io/badge/TODO-Coming_Soon_(TM)-red?style=flat)
 
 ### Planned
- - **Extended Configuration** \
- Definition of custom video sources
+
+![TODO](https://img.shields.io/badge/TODO-Coming_Soon_(TM)-red?style=flat)
 
 ## Getting Started
 
