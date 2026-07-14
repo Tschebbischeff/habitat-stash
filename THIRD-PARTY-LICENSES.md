@@ -24,4 +24,11 @@ The date used in the copyright notices in this file represents the year indicate
 * **Copyright Notice:** <COPYRIGHT_NOTICE>
 -->
 
-*This repository currently does not use any third-party software directly.*
+## Nextcloud Docker
+
+* **Project:** https://nextcloud.com/
+* **Version:** Latest Stable
+* **In use since:** July 2026
+* **Source Code:** https://github.com/nextcloud/docker
+* **License:** [AGPL-3.0-only](https://github.com/nextcloud/docker/blob/master/LICENSE.md)
+* **Copyright Notice:** Copyright (c) 2016, Nextcloud GmbH and Contributors

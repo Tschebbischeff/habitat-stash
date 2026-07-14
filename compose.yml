@@ -8,51 +8,85 @@ networks:
       config:
         - subnet: "${APP_NETWORK_POOL}"
 
-# volumes:
-#   habitat-config:
+volumes:
+  habitat-config:
+  nextcloud-main:
+  nextcloud-custom_apps:
+  nextcloud-config:
+  nextcloud-data:
+  nextcloud-themes:
+  nextcloud-provisioning:
 
-# No Secrets, Syntax Stub:
-# secrets:
-#   SECRET_NAME:
-#     file: ${SECRETS_DIR}/SECRET_NAME
+secrets:
+  NEXTCLOUD_MYSQL_PASSWORD:
+    file: ${SECRETS_DIR}/NEXTCLOUD_MYSQL_PASSWORD
+  NEXTCLOUD_MYSQL_PASSWORD_HASH:
+    file: ${SECRETS_DIR}/NEXTCLOUD_MYSQL_PASSWORD_HASH
+  NEXTCLOUD_ADMIN_PASSWORD:
+    file: ${SECRETS_DIR}/NEXTCLOUD_ADMIN_PASSWORD
+  REDIS_PASSWORD:
+    file: ${SECRETS_DIR}/REDIS_PASSWORD
 
 
 services:
 
-  # habitat-config-stash:
-  #   image: tschebbischeff/habitat-config:latest
-  #   container_name: ${APP_NAME_HOST}_habitat-config-stash
-  #   restart: no
-  #   env_file:
-  #     - ./.env
-  #     - path: ${ENV_DIR}/.env
-  #       required: false
-  #     - path: ${ENV_DIR}/habitat-config.env
-  #       required: false
-  #   environment:
-  #     MODULE_NAME: "stash"
-  #   networks:
-  #     internal:
-  #   volumes:
-  #     - habitat-config:/habitat-config/orchestration
-  #     - ./habitat-config:/habitat-config/source:ro
-
-  stub:
-    image: alpine:latest
-    container_name: ${APP_NAME_HOST}_stub
-    restart: unless-stopped
-    # expose:
-    #   - '1337'
+  habitat-config-stash:
+    image: tschebbischeff/habitat-config:latest
+    container_name: ${APP_NAME_HOST}_habitat-config-stash
+    restart: no
     env_file:
       - ./.env
       - path: ${ENV_DIR}/.env
         required: false
-      - path: ${ENV_DIR}/stub.env
+      - path: ${ENV_DIR}/habitat-config.env
         required: false
     environment:
-      FOO: 'bar'
-    # volumes:
-    #   - /src:/dest
+      MODULE_NAME: "stash"
+    secrets:
+      - NEXTCLOUD_MYSQL_PASSWORD_HASH
+    networks:
+      internal:
+    volumes:
+      - habitat-config:/habitat-config/orchestration
+      - ./habitat-config:/habitat-config/source:ro
+      - nextcloud-provisioning:/habitat-config/target/nextcloud
+
+  nextcloud:
+    image: nextcloud:stable
+    container_name: ${APP_NAME_HOST}_nextcloud
+    restart: unless-stopped
+    expose:
+      - '80'
+    env_file:
+      - ./.env
+      - path: ${ENV_DIR}/.env
+        required: false
+      - path: ${ENV_DIR}/nextcloud.env
+        required: false
+    environment:
+      MYSQL_DATABASE: 'habitat_nextcloud'
+      MYSQL_USER: 'nextcloud'
+      MYSQL_PASSWORD_FILE: '/run/secrets/NEXTCLOUD_MYSQL_PASSWORD'
+      MYSQL_HOST: '${APP_NAME_HOST}_mariadb'
+      REDIS_HOST: '${APP_NAME_HOST}_redis'
+      REDIS_HOST_PASSWORD_FILE: '/run/secrets/REDIS_PASSWORD'
+      NEXTCLOUD_ADMIN_USER: 'admin'
+      NEXTCLOUD_ADMIN_PASSWORD_FILE: '/run/secrets/NEXTCLOUD_ADMIN_PASSWORD'
+      NEXTCLOUD_UPDATE: '1'
+      APACHE_BODY_LIMIT: '0'
+      APACHE_DISABLE_REWRITE_IP: '1'
+      TRUSTED_PROXIES: '${APP_NAME_HOST}_traefik'
+    secrets:
+      - NEXTCLOUD_MYSQL_PASSWORD
+      - REDIS_PASSWORD
+      - NEXTCLOUD_ADMIN_PASSWORD
+    volumes:
+      - nextcloud-main:/var/www/html
+      - nextcloud-custom_apps:/var/www/html/custom_apps
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-data:/var/www/html/data
+      - nextcloud-themes:/var/www/html/themes
+      - nextcloud-provisioning:/docker-entrypoint-hooks.d
     networks:
       internal:
     # healthcheck:
@@ -61,6 +95,6 @@ services:
     #   timeout: 10s
     #   retries: 5
     #   start_period: 10s
-    # depends_on:
-    #   habitat-config-stash:
-    #     condition: service_completed_successfully
+    depends_on:
+      habitat-config-stash:
+        condition: service_completed_successfully

@@ -1,0 +1,20 @@
+# Documentation:
+# https://doc.traefik.io/traefik/reference/routing-configuration/dynamic-configuration-methods/
+# https://doc.traefik.io/traefik/reference/routing-configuration/http/tls/overview/
+
+http:
+  services:
+    svc_nextcloud-80:
+      loadBalancer:
+        servers:
+          - url: 'http://{{ env "APP_NAME_HOST" }}_nextcloud:80'
+  routers:
+    nextcloud-80:
+      rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`)'
+      service: svc_nextcloud-80
+      entryPoints: ["websecure"]
+      middlewares:
+        - "cors-policy"
+        - "auth-proxy"
+      tls:
+        certResolver: porkbun-api
