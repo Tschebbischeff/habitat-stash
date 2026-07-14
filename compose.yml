@@ -76,7 +76,10 @@ services:
       NEXTCLOUD_TRUSTED_DOMAINS: '*.${APP_HOST}'
       APACHE_BODY_LIMIT: '0'
       APACHE_DISABLE_REWRITE_IP: '1'
-      TRUSTED_PROXIES: '${APP_NAME_HOST}_traefik'
+      TRUSTED_PROXIES: '${APP_NETWORK_POOL}'
+      OVERWRITEHOST: 'nextcloud.${APP_HOST}'
+      OVERWRITEPROTOCOL: 'https'
+      OVERWRITECLIURL: 'https://nextcloud.${APP_HOST}'
     secrets:
       - NEXTCLOUD_MYSQL_PASSWORD
       - REDIS_PASSWORD
