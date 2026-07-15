@@ -88,7 +88,7 @@ services:
       - nextcloud-main:/var/www/html
       - nextcloud-custom_apps:/var/www/html/custom_apps
       - nextcloud-config:/var/www/html/config
-      - nextcloud-data:/var/www/html/data
+      - ${VOLUME_DIR}/nextcloud-data:/var/www/html/data
       - nextcloud-themes:/var/www/html/themes
       - nextcloud-provisioning:/docker-entrypoint-hooks.d
     networks:
