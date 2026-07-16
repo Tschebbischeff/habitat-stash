@@ -16,8 +16,7 @@ NEXTCLOUD_CUSTOM_APPS="$MANDATORY_CUSTOM_APPS,$NEXTCLOUD_CUSTOM_APPS"
 declare -a REQ_APPS
 mapfile -t REQ_APPS < <(printf "%s" "$NEXTCLOUD_CUSTOM_APPS" | sed -E 's/([^\\]),/\1\n/g')
 for i in "${!REQ_APPS[@]}"; do
-    REQ_APPS[i]="${REQ_APPS[i]##+[[:space:]]}"
-    REQ_APPS[i]="${REQ_APPS[i]%%+[[:space:]]}"
+    REQ_APPS[i]="$(echo "${REQ_APPS[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
 INSTALLED_APPS="$(php occ app:list --no-interaction --no-warnings --shipped=false --enabled --output=plain | grep -Po ' *- *\K[^:]*')"

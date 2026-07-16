@@ -24,15 +24,13 @@ NEXTCLOUD_SYSTEM_CONFIG_UNSET="$MANDATORY_SYSTEM_CONFIG_UNSET"$'\n'"$NEXTCLOUD_S
 declare -a CONFIG_SET
 mapfile -t CONFIG_SET < <(printf "%s" "$NEXTCLOUD_SYSTEM_CONFIG_SET" | sed -E 's/([^\\]),/\1\n/g')
 for i in "${!CONFIG_SET[@]}"; do
-    CONFIG_SET[i]="${CONFIG_SET[i]##+[[:space:]]}"
-    CONFIG_SET[i]="${CONFIG_SET[i]%%+[[:space:]]}"
+    CONFIG_SET[i]="$(echo "${CONFIG_SET[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
 declare -a CONFIG_UNSET
 mapfile -t CONFIG_UNSET < <(printf "%s" "$NEXTCLOUD_SYSTEM_CONFIG_UNSET" | sed -E 's/([^\\]),/\1\n/g')
 for i in "${!CONFIG_UNSET[@]}"; do
-    CONFIG_UNSET[i]="${CONFIG_UNSET[i]##+[[:space:]]}"
-    CONFIG_UNSET[i]="${CONFIG_UNSET[i]%%+[[:space:]]}"
+    CONFIG_UNSET[i]="$(echo "${CONFIG_UNSET[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
 for cfg in "${CONFIG_SET[@]}"; do
