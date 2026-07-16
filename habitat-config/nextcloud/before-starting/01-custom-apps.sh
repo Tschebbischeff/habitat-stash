@@ -2,8 +2,6 @@
 
 MANDATORY_CUSTOM_APPS="oidc_login"
 
-shopt -s extglob
-
 inArray() {
     local search="$1"; shift
     for item in "$@"; do
@@ -19,11 +17,8 @@ for i in "${!REQ_APPS[@]}"; do
     REQ_APPS[i]="$(echo "${REQ_APPS[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
-if ! INSTALLED_APPS_STR="$(php occ app:list --no-interaction --no-warnings --shipped=false --enabled --output=plain | grep -Po ' *- *\K[^:]*')"; then
-    exit 1
-fi
 declare -a INSTALLED_APPS
-mapfile -t INSTALLED_APPS < <()
+mapfile -t INSTALLED_APPS < <(php occ app:list --no-interaction --no-warnings --shipped=false --enabled --output=plain | grep -Po ' *- *\K[^:]*')
 
 for app in "${REQ_APPS[@]}"; do
     [ -n "$app" ] || continue
