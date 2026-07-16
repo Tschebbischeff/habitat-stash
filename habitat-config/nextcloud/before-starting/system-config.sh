@@ -31,15 +31,18 @@ for cfg in "${CONFIG_SET[@]}"; do
     cfgValue="$(echo "$cfg" | grep -Po '^[^ =]*( |=)\K.*$')"
     { [ -n "$cfgName" ] && [ -n "$cfgValue" ]; } || continue
     currentValue="$(php occ config:system:get "$cfgName" --no-interaction --no-warnings --output=plain)"
-    [ "$cfgValue" != "$currentValue" ] || continue
-    if [ "$cfgValue" == "true" ] || [ "$cfgValue" == "false" ]; then
-        php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=boolean
-    elif [ "${cfgValue:0:1}" == "\"" ]; then
-        php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=string
-    elif [[ "$cfgValue" == *.* ]]; then
-        php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=double
+    if [ "${cfgValue:0:1}" == "\"" ] && [ "${cfgValue: -1}" == "\"" ]; then
+        [ "${cfgValue:1:-1}" != "$currentValue" ] || continue
+        php occ config:system:set "$cfgName" --no-interaction --value="${cfgValue:1:-1}" --type=string
     else
-        php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=integer
+        [ "$cfgValue" != "$currentValue" ] || continue
+        if [ "$cfgValue" == "true" ] || [ "$cfgValue" == "false" ]; then
+            php occ config:system:set "$cfgName" --no-interaction --value="$cfgValue" --type=boolean
+        elif [[ "$cfgValue" == *.* ]]; then
+            php occ config:system:set "$cfgName" --no-interaction --value="$cfgValue" --type=double
+        else
+            php occ config:system:set "$cfgName" --no-interaction --value="$cfgValue" --type=integer
+        fi
     fi
 done
 
