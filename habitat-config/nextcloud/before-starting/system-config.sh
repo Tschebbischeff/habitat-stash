@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-cat >"$MANDATORY_SYSTEM_CONFIG_SET" <<EOF
+read -r -d '' "MANDATORY_SYSTEM_CONFIG_SET" <<EOF || true
 oidc_login_provider_url="https://authelia.${APP_HOST}"
 allow_user_to_change_display_name=false
 EOF
 
-cat >"$MANDATORY_SYSTEM_CONFIG_UNSET" <<EOF
+read -r -d '' "MANDATORY_SYSTEM_CONFIG_UNSET" <<EOF || true
 EOF
 
 shopt -s extglob
