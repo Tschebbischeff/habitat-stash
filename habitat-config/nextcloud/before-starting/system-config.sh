@@ -44,7 +44,7 @@ for cfg in "${CONFIG_SET[@]}"; do
     [ "$cfgValue" != "$currentValue" ] || continue
     if [ "$cfgValue" == "true" ] || [ "$cfgValue" == "false" ]; then
         php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=boolean
-    elif [ "${value:0:1}" == "\"" ]; then
+    elif [ "${cfgValue:0:1}" == "\"" ]; then
         php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=string
     elif [[ "$cfgValue" == *.* ]]; then
         php occ config:system:set "$cfgName" --no-interaction "--value=$cfgValue" --type=double
@@ -55,7 +55,7 @@ done
 
 for cfgName in "${CONFIG_UNSET[@]}"; do
     [ -n "$cfgName" ] || continue
-    currentValue="$(php occ config:system:get "$name" --no-interaction --no-warnings --output=plain)"
+    currentValue="$(php occ config:system:get "$cfgName" --no-interaction --no-warnings --output=plain)"
     [ -n "$currentValue" ] || continue
     php occ config:system:delete "$cfgName" --no-interaction
 done
