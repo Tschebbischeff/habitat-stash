@@ -10,14 +10,6 @@ EOF
 
 shopt -s extglob
 
-inArray() {
-    local search="$1"; shift
-    for item in "$@"; do
-        [[ "$item" == "$search" ]] && return 0
-    done
-    return 1
-}
-
 NEXTCLOUD_SYSTEM_CONFIG_SET="$MANDATORY_SYSTEM_CONFIG_SET"$'\n'"$NEXTCLOUD_SYSTEM_CONFIG_SET"
 NEXTCLOUD_SYSTEM_CONFIG_UNSET="$MANDATORY_SYSTEM_CONFIG_UNSET"$'\n'"$NEXTCLOUD_SYSTEM_CONFIG_UNSET"
 
