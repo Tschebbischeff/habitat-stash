@@ -19,7 +19,8 @@ for i in "${!REQ_APPS[@]}"; do
     REQ_APPS[i]="$(echo "${REQ_APPS[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
-INSTALLED_APPS="$(php occ app:list --no-interaction --no-warnings --shipped=false --enabled --output=plain | grep -Po ' *- *\K[^:]*')"
+declare -a INSTALLED_APPS
+mapfile -t INSTALLED_APPS < <(php occ app:list --no-interaction --no-warnings --shipped=false --enabled --output=plain | grep -Po ' *- *\K[^:]*')
 
 for app in "${REQ_APPS[@]}"; do
     [ -n "$app" ] || continue
