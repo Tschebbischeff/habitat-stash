@@ -51,7 +51,6 @@ services:
     secrets:
       - NEXTCLOUD_MYSQL_PASSWORD_HASH
       - NEXTCLOUD_OAUTH_CLIENT_ID
-      - NEXTCLOUD_OAUTH_CLIENT_SECRET
       - NEXTCLOUD_OAUTH_CLIENT_SECRET_HASHED_PBKDF2
     networks:
       internal:
@@ -93,6 +92,8 @@ services:
       - NEXTCLOUD_MYSQL_PASSWORD
       - NEXTCLOUD_ADMIN_PASSWORD
       - REDIS_PASSWORD
+      - NEXTCLOUD_OAUTH_CLIENT_ID
+      - NEXTCLOUD_OAUTH_CLIENT_SECRET
     volumes:
       - nextcloud-main:/var/www/html
       - nextcloud-custom_apps:/var/www/html/custom_apps
