@@ -60,7 +60,8 @@ services:
       - nextcloud-provisioning:/habitat-config/target/nextcloud
 
   nextcloud:
-    image: nextcloud:stable
+    build:
+      context: ./nextcloud
     container_name: ${APP_NAME_HOST}_nextcloud
     restart: unless-stopped
     expose:
@@ -88,6 +89,8 @@ services:
       OVERWRITEHOST: 'nextcloud.${APP_HOST}'
       OVERWRITEPROTOCOL: 'https'
       OVERWRITECLIURL: 'https://nextcloud.${APP_HOST}'
+      NEXTCLOUD_OAUTH_CLIENT_ID_FILE: '/run/secrets/NEXTCLOUD_OAUTH_CLIENT_ID'
+      NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE: '/run/secrets/NEXTCLOUD_OAUTH_CLIENT_SECRET'
     secrets:
       - NEXTCLOUD_MYSQL_PASSWORD
       - NEXTCLOUD_ADMIN_PASSWORD

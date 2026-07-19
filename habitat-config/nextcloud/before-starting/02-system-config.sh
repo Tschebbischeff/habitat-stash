@@ -4,8 +4,8 @@ read -r -d '' "MANDATORY_SYSTEM_CONFIG_SET" <<EOF || true
 allow_user_to_change_display_name=false
 lost_password_link="disabled"
 oidc_login_provider_url="https://authelia.${APP_HOST}"
-oidc_login_client_id="$(cat /run/secrets/NEXTCLOUD_OAUTH_CLIENT_ID)"
-oidc_login_client_secret="$(cat /run/secrets/NEXTCLOUD_OAUTH_CLIENT_SECRET)"
+oidc_login_client_id="${NEXTCLOUD_OAUTH_CLIENT_ID}"
+oidc_login_client_secret="${NEXTCLOUD_OAUTH_CLIENT_SECRET}"
 oidc_login_auto_redirect=true
 oidc_login_logout_url="https://nextcloud.${APP_HOST}/"
 oidc_login_end_session_redirect=true
