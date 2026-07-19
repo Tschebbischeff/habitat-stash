@@ -1,8 +1,39 @@
 #!/usr/bin/env bash
 
 read -r -d '' "MANDATORY_SYSTEM_CONFIG_SET" <<EOF || true
-oidc_login_provider_url="https://authelia.${APP_HOST}"
 allow_user_to_change_display_name=false
+lost_password_link="disabled"
+oidc_login_provider_url="https://authelia.${APP_HOST}"
+oidc_login_client_id="$(cat /run/secrets/NEXTCLOUD_OAUTH_CLIENT_ID)"
+oidc_login_client_secret="$(cat /run/secrets/NEXTCLOUD_OAUTH_CLIENT_SECRET)"
+oidc_login_auto_redirect=true
+oidc_login_logout_url="https://nextcloud.${APP_HOST}/"
+oidc_login_end_session_redirect=true
+# oidc_login_default_quota="1000000000"
+oidc_login_button_text="Log in with Authelia"
+oidc_login_hide_password_form=true
+oidc_login_use_id_token=false
+oidc_login_attributes[id]="preferred_username"
+oidc_login_attributes[name]="name"
+oidc_login_attributes[mail]="email"
+oidc_login_attributes[groups]="groups"
+oidc_login_attributes[is_admin]="is_nextcloud_admin"
+oidc_login_default_group="oidc"
+oidc_login_use_external_storage=false
+oidc_login_scope="openid profile email groups nextcloud_userinfo"
+oidc_login_proxy_ldap=false
+oidc_login_disable_registration=true
+oidc_login_redir_fallback=false
+oidc_login_tls_verify=true
+oidc_create_groups=false
+oidc_login_webdav_enabled=false
+oidc_login_password_authentication=false
+oidc_login_public_key_caching_time=86400
+oidc_login_min_time_between_jwks_requests=10
+oidc_login_well_known_caching_time=86400
+oidc_login_update_avatar=false
+oidc_login_skip_proxy=false
+oidc_login_code_challenge_method='S256'
 EOF
 
 read -r -d '' "MANDATORY_SYSTEM_CONFIG_UNSET" <<EOF || true
@@ -27,26 +58,38 @@ for cfg in "${CONFIG_SET[@]}"; do
     [ -n "$cfg" ] || continue
     cfgName="$(echo "$cfg" | grep -Po '^[^ =]*')"
     cfgValue="$(echo "$cfg" | grep -Po '^[^ =]*( |=)\K.*$')"
-    { [ -n "$cfgName" ] && [ -n "$cfgValue" ]; } || continue
-    currentValue="$(php occ config:system:get "$cfgName" --no-interaction --no-warnings --output=plain)"
+    { [ -n "$cfgName" ] && [ "${cfgName:0:1}" != "#" ] && [ -n "$cfgValue" ]; } || continue
+    cfgKeys="$(echo "$cfgName" | grep -Po '^[^[]*\[\K.*')"
+    cfgNames=("$(echo "$cfgName" | grep -Po '^[^[]*')")
+    while [ -n "$cfgKeys" ]; do
+        cfgNames[${#cfgNames[@]}]="$(echo "$cfgKeys" | grep -Po '^\[?\K[^\]]*')"
+        cfgKeys="$(echo "$cfgKeys" | grep -Po '^\[?[^\]]*\]\K.*')"
+    done
+    currentValue="$(php occ config:system:get --no-interaction --no-warnings --output=plain -- "${cfgNames[@]}")"
     if [ "${cfgValue:0:1}" == "\"" ] && [ "${cfgValue: -1}" == "\"" ]; then
         [ "${cfgValue:1:-1}" != "$currentValue" ] || continue
-        php occ config:system:set "$cfgName" --no-interaction --value="${cfgValue:1:-1}" --type=string
+        php occ config:system:set --no-interaction --value="${cfgValue:1:-1}" --type=string -- "${cfgNames[@]}"
     else
         [ "$cfgValue" != "$currentValue" ] || continue
         if [ "$cfgValue" == "true" ] || [ "$cfgValue" == "false" ]; then
-            php occ config:system:set "$cfgName" --no-interaction --value="$cfgValue" --type=boolean
+            php occ config:system:set --no-interaction --value="$cfgValue" --type=boolean -- "${cfgNames[@]}"
         elif [[ "$cfgValue" == *.* ]]; then
-            php occ config:system:set "$cfgName" --no-interaction --value="$cfgValue" --type=double
+            php occ config:system:set --no-interaction --value="$cfgValue" --type=double -- "${cfgNames[@]}"
         else
-            php occ config:system:set "$cfgName" --no-interaction --value="$cfgValue" --type=integer
+            php occ config:system:set --no-interaction --value="$cfgValue" --type=integer -- "${cfgNames[@]}"
         fi
     fi
 done
 
 for cfgName in "${CONFIG_UNSET[@]}"; do
     [ -n "$cfgName" ] || continue
-    currentValue="$(php occ config:system:get "$cfgName" --no-interaction --no-warnings --output=plain)"
+    cfgKeys="$(echo "$cfgName" | grep -Po '^[^[]*\[\K.*')"
+    cfgNames=("$(echo "$cfgName" | grep -Po '^[^[]*')")
+    while [ -n "$cfgKeys" ]; do
+        cfgNames[${#cfgNames[@]}]="$(echo "$cfgKeys" | grep -Po '^\[?\K[^\]]*')"
+        cfgKeys="$(echo "$cfgKeys" | grep -Po '^\[?[^\]]*\]\K.*')"
+    done
+    currentValue="$(php occ config:system:get --no-interaction --no-warnings --output=plain -- "${cfgNames[@]}")"
     [ -n "$currentValue" ] || continue
-    php occ config:system:delete "$cfgName" --no-interaction
+    php occ config:system:delete --no-interaction -- "${cfgNames[@]}"
 done
