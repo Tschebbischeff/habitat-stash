@@ -7,8 +7,8 @@ oidc_login_provider_url="https://authelia.${APP_HOST}"
 oidc_login_client_id="$(cat "/run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID")"
 oidc_login_client_secret="$(cat "/run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET")"
 oidc_login_auto_redirect=true
-oidc_login_logout_url="https://nextcloud.${APP_HOST}"
-oidc_login_end_session_redirect=true
+oidc_login_logout_url="https://authelia.${APP_HOST}/logout?rd=https%3A%2F%2Fnextcloud.${APP_HOST}"
+oidc_login_end_session_redirect=false
 # oidc_login_default_quota="1000000000"
 oidc_login_button_text="Log in with Authelia"
 oidc_login_hide_password_form=true
