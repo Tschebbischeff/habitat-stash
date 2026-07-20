@@ -1,6 +1,17 @@
 #!/bin/sh
 
-[ -f "NEXTCLOUD_OAUTH_CLIENT_ID_FILE" ] && export NEXTCLOUD_OAUTH_CLIENT_ID="$(cat "$NEXTCLOUD_OAUTH_CLIENT_ID_FILE")"
-[ -f "NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE" ] && export NEXTCLOUD_OAUTH_CLIENT_SECRET="$(cat "$NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE")"
+mkdir -p /run/secrets/www-data
+chown www-data:www-data /run/secrets/www-data
+chmod 755 /run/secrets/www-data
+
+[ -f "NEXTCLOUD_OAUTH_CLIENT_ID_FILE" ] && \
+    cat "$NEXTCLOUD_OAUTH_CLIENT_ID_FILE" >/run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID && \
+    chown -R www-data:www-data /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID && \
+    chmod 400 /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID
+
+[ -f "NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE" ] && \
+    cat "$NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE" >/run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET && \
+    chown -R www-data:www-data /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET && \
+    chmod 400 /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET
 
 exec "$@"
