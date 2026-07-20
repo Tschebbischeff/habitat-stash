@@ -34,6 +34,7 @@ oidc_login_well_known_caching_time=86400
 oidc_login_update_avatar=false
 oidc_login_skip_proxy=false
 oidc_login_code_challenge_method="S256"
+skeletondirectory=""
 EOF
 
 read -r -d '' "MANDATORY_SYSTEM_CONFIG_UNSET" <<EOF || true
@@ -66,8 +67,9 @@ for cfg in "${CONFIG_SET[@]}"; do
         cfgKeys="$(echo "$cfgKeys" | grep -Po '^\[?[^\]]*\]\K.*')"
     done
     currentValue="$(php occ config:system:get --no-interaction --no-warnings --output=plain -- "${cfgNames[@]}")"
+    currentValueObtained="$?"
     if [ "${cfgValue:0:1}" == "\"" ] && [ "${cfgValue: -1}" == "\"" ]; then
-        [ "${cfgValue:1:-1}" != "$currentValue" ] || continue
+        { [ "$currentValueObtained" -eq "0" ] && [ "${cfgValue:1:-1}" != "$currentValue" ]; } || continue
         php occ config:system:set --no-interaction --value="${cfgValue:1:-1}" --type=string -- "${cfgNames[@]}"
     else
         [ "$cfgValue" != "$currentValue" ] || continue
