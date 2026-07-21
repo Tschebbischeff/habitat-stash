@@ -26,6 +26,7 @@ EOF
 cat >"$SOURCE_FILE_APP_SITE" <<'EOF'
 - title: Nextcloud
   url: https://nextcloud.${APP_HOST}
+  check-url: http://${APP_NAME_HOST}_nextcloud:80/status.php
   icon: /assets/icons/di/nextcloud.svg
 EOF
 
