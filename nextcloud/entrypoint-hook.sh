@@ -1,17 +1,20 @@
 #!/bin/sh
 
-mkdir -p /run/secrets/www-data
-chown www-data:www-data /run/secrets/www-data
-chmod 755 /run/secrets/www-data
-
-[ -f "$NEXTCLOUD_OAUTH_CLIENT_ID_FILE" ] && \
-    cat "$NEXTCLOUD_OAUTH_CLIENT_ID_FILE" >/run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID && \
-    chown -R www-data:www-data /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID && \
-    chmod 400 /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_ID
-
-[ -f "$NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE" ] && \
-    cat "$NEXTCLOUD_OAUTH_CLIENT_SECRET_FILE" >/run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET && \
-    chown -R www-data:www-data /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET && \
-    chmod 400 /run/secrets/www-data/NEXTCLOUD_OAUTH_CLIENT_SECRET
+if [ -n "$NEXTCLOUD_MAP_SECRETS" ]; then
+    printf '%s\n' "$NEXTCLOUD_MAP_SECRETS" | tr ',' '\n' | while IFS= read -r sourcePath || [ -n "$sourcePath" ]; do
+        sourcePath=$(echo "$sourcePath" | awk '{gsub(/^[ \t]+|[ \t]+$/, ""); print}')
+        { [ -n "$sourcePath" ] && [ -f "$sourcePath" ]; } || continue
+        targetDir="$(dirname "$sourcePath")/.www-data"
+        if [ ! -d "$targetDir" ]; then
+            mkdir -p "$targetDir" && \
+            chown www-data:www-data "$targetDir" && \
+            chmod 755 "$targetDir"
+        fi
+        targetPath="$targetDir/$(basename "$sourcePath")"
+        cp "$sourcePath" "$targetPath" && \
+        chown www-data:www-data "$targetPath" && \
+        chmod 400 "$targetPath"
+    done
+fi
 
 exec "$@"
