@@ -15,6 +15,18 @@ http:
   routers:
     nextcloud-80:
       rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`)'
+      priority: 1
+      service: svc_nextcloud-80
+      entryPoints: ["websecure"]
+      middlewares:
+        - "sts-headers"
+        - "cors-policy"
+        - "auth-proxy"
+      tls:
+        certResolver: porkbun-api
+    nextcloud-80-status:
+      rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`) && Path(`/status.php`)'
+      priority: 2
       service: svc_nextcloud-80
       entryPoints: ["websecure"]
       middlewares:
@@ -24,6 +36,7 @@ http:
         certResolver: porkbun-api
     nextcloud-7867:
       rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`) && PathPrefix(`/push`)'
+      priority: 3
       service: svc_nextcloud-7867
       entryPoints: ["websecure"]
       middlewares:

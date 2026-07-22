@@ -14,7 +14,7 @@ if [ -x "$BINARY" ]; then
     (
         PUSH_ENDPOINT="https://${OVERWRITEHOST}/push"
         while ! php -r '@fsockopen("127.0.0.1", 7867) or exit(1);' 2>/dev/null; do sleep 2; done
-        currentValue="$(php occ config:app:get --no-interaction --no-warnings --output=plain -- "notify_push" "appurl")"
+        currentValue="$(php occ config:app:get --no-interaction --no-warnings --output=plain -- "notify_push" "base_endpoint")"
         if [ "$currentValue" != "$PUSH_ENDPOINT" ]; then
             echo "Setting up 'notify_push' with '$PUSH_ENDPOINT'..."
             if php occ notify_push:setup --no-interaction "$PUSH_ENDPOINT"; then
