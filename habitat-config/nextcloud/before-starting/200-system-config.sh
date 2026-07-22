@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-read -r -d '' "MANDATORY_SYSTEM_CONFIG_SET" <<EOF || true
+read -r -d '' "DEFAULT_SYSTEM_CONFIG_SET" <<EOF || true
+backgroundjobs_mode="cron"
+skeletondirectory=""
 allow_user_to_change_display_name=false
 lost_password_link="disabled"
 oidc_login_provider_url="https://authelia.${APP_HOST}"
@@ -34,14 +36,13 @@ oidc_login_well_known_caching_time=86400
 oidc_login_update_avatar=false
 oidc_login_skip_proxy=false
 oidc_login_code_challenge_method="S256"
-skeletondirectory=""
 EOF
 
-read -r -d '' "MANDATORY_SYSTEM_CONFIG_UNSET" <<EOF || true
+read -r -d '' "DEFAULT_SYSTEM_CONFIG_UNSET" <<EOF || true
 EOF
 
-NEXTCLOUD_SYSTEM_CONFIG_SET="$MANDATORY_SYSTEM_CONFIG_SET"$'\n'"$NEXTCLOUD_SYSTEM_CONFIG_SET"
-NEXTCLOUD_SYSTEM_CONFIG_UNSET="$MANDATORY_SYSTEM_CONFIG_UNSET"$'\n'"$NEXTCLOUD_SYSTEM_CONFIG_UNSET"
+NEXTCLOUD_SYSTEM_CONFIG_SET="$DEFAULT_SYSTEM_CONFIG_SET"$'\n'"$NEXTCLOUD_SYSTEM_CONFIG_SET"
+NEXTCLOUD_SYSTEM_CONFIG_UNSET="$DEFAULT_SYSTEM_CONFIG_UNSET"$'\n'"$NEXTCLOUD_SYSTEM_CONFIG_UNSET"
 
 declare -a CONFIG_SET
 mapfile -t CONFIG_SET < <(printf "%s" "$NEXTCLOUD_SYSTEM_CONFIG_SET" | sed -E 's/([^\\]),/\1\n/g')

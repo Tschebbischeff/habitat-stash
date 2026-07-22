@@ -27,7 +27,7 @@ The date used in the copyright notices in this file represents the year indicate
 ## Nextcloud Docker
 
 * **Project:** https://nextcloud.com/
-* **Version:** Latest Stable
+* **Version:** Latest Stable (Apache)
 * **In use since:** July 2026
 * **Source Code:** https://github.com/nextcloud/docker
 * **License:** [AGPL-3.0-only](https://github.com/nextcloud/docker/blob/master/LICENSE.md)
