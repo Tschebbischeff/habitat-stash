@@ -10,5 +10,8 @@ COPY ./supervisord.conf /
 COPY ./entrypoint-hook.sh /entrypoint-hook.sh
 RUN chmod +x /entrypoint-hook.sh
 
+COPY ./notify-push.sh /notify-push.sh
+RUN chmod +x /notify-push.sh
+
 ENTRYPOINT ["/entrypoint-hook.sh"]
 CMD	[ "/entrypoint.sh", "/usr/bin/supervisord", "-c", "/supervisord.conf" ]

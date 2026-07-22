@@ -8,6 +8,10 @@ http:
       loadBalancer:
         servers:
           - url: 'http://{{ env "APP_NAME_HOST" }}_nextcloud:80'
+    svc_nextcloud-7867:
+      loadBalancer:
+        servers:
+          - url: 'http://{{ env "APP_NAME_HOST" }}_nextcloud:7867'
   routers:
     nextcloud-80:
       rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`)'
@@ -17,5 +21,13 @@ http:
         - "sts-headers"
         - "cors-policy"
         - "auth-proxy"
+      tls:
+        certResolver: porkbun-api
+    nextcloud-7867:
+      rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`) && PathPrefix(`/push`)'
+      service: svc_nextcloud-7867
+      entryPoints: ["websecure"]
+      middlewares:
+        - "sts-headers"
       tls:
         certResolver: porkbun-api

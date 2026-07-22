@@ -85,7 +85,7 @@ services:
       NEXTCLOUD_TRUSTED_DOMAINS: 'nextcloud.${APP_HOST} ${APP_NAME_HOST}_nextcloud nextcloud'
       APACHE_BODY_LIMIT: '0'
       APACHE_DISABLE_REWRITE_IP: '1'
-      TRUSTED_PROXIES: '${APP_NETWORK_POOL}'
+      TRUSTED_PROXIES: '127.0.0.1 ${APP_NETWORK_POOL}'
       OVERWRITEHOST: 'nextcloud.${APP_HOST}'
       OVERWRITEPROTOCOL: 'https'
       OVERWRITECLIURL: 'https://nextcloud.${APP_HOST}'

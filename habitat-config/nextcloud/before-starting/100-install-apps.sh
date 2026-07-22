@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MANDATORY_CUSTOM_APPS="oidc_login"
+MANDATORY_CUSTOM_APPS="oidc_login,notify_push"
 
 inArray() {
     local search="$1"; shift
