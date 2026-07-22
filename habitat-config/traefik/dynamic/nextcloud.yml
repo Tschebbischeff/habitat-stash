@@ -24,16 +24,6 @@ http:
         - "auth-proxy"
       tls:
         certResolver: porkbun-api
-    nextcloud-80-status:
-      rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`) && Path(`/status.php`)'
-      priority: 2
-      service: svc_nextcloud-80
-      entryPoints: ["websecure"]
-      middlewares:
-        - "sts-headers"
-        - "cors-policy"
-      tls:
-        certResolver: porkbun-api
     nextcloud-7867:
       rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`) && PathPrefix(`/push`)'
       priority: 3
