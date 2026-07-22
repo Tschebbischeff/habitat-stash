@@ -1,8 +1,0 @@
-http:
-  middlewares:
-    nextcloud-headers:
-      headers:
-        stsSeconds: 15552000
-        stsIncludeSubdomains: true
-        stsPreload: true
-        forceSTSHeader: true

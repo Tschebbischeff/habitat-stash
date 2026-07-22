@@ -14,7 +14,7 @@ http:
       service: svc_nextcloud-80
       entryPoints: ["websecure"]
       middlewares:
-        - "nextcloud-headers"
+        - "sts-headers"
         - "cors-policy"
         - "auth-proxy"
       tls:
