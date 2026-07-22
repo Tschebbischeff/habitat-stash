@@ -13,7 +13,7 @@ SOURCE_FILE_APP_SITE="$(mktemp)"
 SOURCE_FILE_DEV_REPOSITORIES="$(mktemp)"
 
 APP_PAGE_NAME="Apps"
-APP_PAGE_CATEGORY_NAME="Data"
+APP_PAGE_CATEGORY_NAME="Apps"
 DEV_PAGE_NAME="Development"
 
 cat >"$SOURCE_FILE_APP_CATEGORY" <<EOF
@@ -47,7 +47,7 @@ YQ_ADD_CATEGORY='
     .pages[] | select(.name == "'"$APP_PAGE_NAME"'") |
     .columns[0].widgets[] | select(.type == "split-column") |
     .widgets
-  ) += load("'"$SOURCE_FILE_APP_CATEGORY"'")
+  ) |= [load("'"$SOURCE_FILE_APP_CATEGORY"'")] + .
 '
 YQ_ADD_SITE='
   (
