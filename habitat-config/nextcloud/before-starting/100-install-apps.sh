@@ -11,16 +11,16 @@ inArray() {
 }
 
 NEXTCLOUD_CUSTOM_APPS="$MANDATORY_CUSTOM_APPS,$NEXTCLOUD_CUSTOM_APPS"
-declare -a REQ_APPS
-mapfile -t REQ_APPS < <(printf "%s" "$NEXTCLOUD_CUSTOM_APPS" | sed -E 's/([^\\]),/\1\n/g')
-for i in "${!REQ_APPS[@]}"; do
-    REQ_APPS[i]="$(echo "${REQ_APPS[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
+declare -a APP_LIST
+mapfile -t APP_LIST < <(printf "%s" "$NEXTCLOUD_CUSTOM_APPS" | sed -E 's/([^\\]),/\1\n/g')
+for i in "${!APP_LIST[@]}"; do
+    APP_LIST[i]="$(echo "${APP_LIST[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
 declare -a INSTALLED_APPS
 mapfile -t INSTALLED_APPS < <(php occ app:list --no-interaction --no-warnings --shipped=false --enabled --output=plain | grep -Po ' *- *\K[^:]*')
 
-for app in "${REQ_APPS[@]}"; do
+for app in "${APP_LIST[@]}"; do
     [ -n "$app" ] || continue
     if ! inArray "$app" "${INSTALLED_APPS[@]}"; then
         echo "Installing custom app '$app'..."
@@ -33,7 +33,7 @@ done
 
 for app in "${INSTALLED_APPS[@]}"; do
     [ -n "$app" ] || continue
-    if ! inArray "$app" "${REQ_APPS[@]}"; then
+    if ! inArray "$app" "${APP_LIST[@]}"; then
         echo "Uninstalling custom app '$app'..."
         php occ app:remove --no-interaction "$app"
     fi
