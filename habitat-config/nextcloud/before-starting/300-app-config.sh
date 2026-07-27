@@ -11,13 +11,13 @@ NEXTCLOUD_APP_CONFIG_SET="$MANDATORY_APP_CONFIG_SET"$'\n'"$NEXTCLOUD_APP_CONFIG_
 NEXTCLOUD_APP_CONFIG_UNSET="$MANDATORY_APP_CONFIG_UNSET"$'\n'"$NEXTCLOUD_APP_CONFIG_UNSET"
 
 declare -a CONFIG_SET
-mapfile -t CONFIG_SET < <(printf "%s" "$NEXTCLOUD_APP_CONFIG_SET" | sed -E 's/([^\\]),/\1\n/g')
+mapfile -t CONFIG_SET < <(printf "%s" "$NEXTCLOUD_APP_CONFIG_SET")
 for i in "${!CONFIG_SET[@]}"; do
     CONFIG_SET[i]="$(echo "${CONFIG_SET[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
 
 declare -a CONFIG_UNSET
-mapfile -t CONFIG_UNSET < <(printf "%s" "$NEXTCLOUD_APP_CONFIG_UNSET" | sed -E 's/([^\\]),/\1\n/g')
+mapfile -t CONFIG_UNSET < <(printf "%s" "$NEXTCLOUD_APP_CONFIG_UNSET")
 for i in "${!CONFIG_UNSET[@]}"; do
     CONFIG_UNSET[i]="$(echo "${CONFIG_UNSET[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
