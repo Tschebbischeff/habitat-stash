@@ -1,9 +1,13 @@
 FROM nextcloud:stable-apache
 
 ENV NEXTCLOUD_UPDATE=1
+
 RUN apt-get update && apt-get install -y supervisor && \
-  rm -rf /var/lib/apt/lists/* && \
   mkdir /var/log/supervisord /var/run/supervisord
+RUN apt-get update && apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y imagemagick libmagickcore-6.q16-6-extra
+
+RUN rm -rf /var/lib/apt/lists/*
 
 COPY ./supervisord.conf /
 

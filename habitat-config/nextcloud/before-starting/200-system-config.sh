@@ -40,6 +40,20 @@ oidc_login_well_known_caching_time=86400
 oidc_login_update_avatar=false
 oidc_login_skip_proxy=false
 oidc_login_code_challenge_method="S256"
+enable_previews=true
+enabledPreviewProviders[0]="OC\Preview\PNG"
+enabledPreviewProviders[1]="OC\Preview\JPEG"
+enabledPreviewProviders[2]="OC\Preview\GIF"
+enabledPreviewProviders[3]="OC\Preview\BMP"
+enabledPreviewProviders[4]="OC\Preview\XBitmap"
+enabledPreviewProviders[5]="OC\Preview\Krita"
+enabledPreviewProviders[6]="OC\Preview\WebP"
+enabledPreviewProviders[7]="OC\Preview\MarkDown"
+enabledPreviewProviders[8]="OC\Preview\TXT"
+enabledPreviewProviders[9]="OC\Preview\OpenDocument"
+enabledPreviewProviders[10]="OC\Preview\Movie"
+# Careful with HEIC due to: https://github.com/nextcloud/server/pull/28079 -> https://hackerone.com/reports/1261413
+enabledPreviewProviders[10]="OC\Preview\HEIC"
 EOF
 
 read -r -d '' "DEFAULT_SYSTEM_CONFIG_UNSET" <<EOF || true
