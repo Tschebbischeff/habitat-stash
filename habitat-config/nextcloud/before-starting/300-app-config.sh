@@ -35,7 +35,7 @@ for cfg in "${CONFIG_SET[@]}"; do
     done
     currentValue="$(php occ config:app:get --no-interaction --no-warnings --output=plain -- "${cfgNames[@]}")"
     currentValueObtained="$?"
-    if [ "${cfgValue:0:1}" == "\"" ] && [ "${cfgValue: -1}" == "\"" ]; then
+    if { [ "${cfgValue:0:1}" == "\"" ] && [ "${cfgValue: -1}" == "\"" ]; } || { [ "${cfgValue:0:1}" == "'" ] && [ "${cfgValue: -1}" == "'" ]; }; then
         [ "$currentValueObtained" -eq "0" ] && [ "${cfgValue:1:-1}" == "$currentValue" ] && continue
         php occ config:app:set --no-interaction --value="${cfgValue:1:-1}" --type=string -- "${cfgNames[@]}"
     else
