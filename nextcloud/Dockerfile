@@ -5,7 +5,7 @@ ENV NEXTCLOUD_UPDATE=1
 RUN apt-get update && apt-get install -y supervisor && \
   mkdir /var/log/supervisord /var/run/supervisord
 RUN apt-get update && apt-get install -y ffmpeg
-RUN apt-get update && apt-get install -y imagemagick libmagickcore-6.q16-6-extra
+RUN apt-get update && apt-get install -y imagemagick libmagickcore-7.q16-10-extra
 
 RUN rm -rf /var/lib/apt/lists/*
 
