@@ -7,6 +7,7 @@ if [ -f "$PATCH_FILE" ]; then
         echo "Patching Nextcloud max version in '$PATCH_FILE'..."
         if sed -i -E 's/(<nextcloud +min-version="[0-9]*" +)max-version="33"( +\/?>)/\1max-version="34"\2/g' "$PATCH_FILE"; then
             echo "Successfully updated max version to 34."
+            php occ app:enable oidc_login
         else
             echo "Error while patching!"
             exit 1
