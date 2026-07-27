@@ -41,22 +41,19 @@ oidc_login_update_avatar=false
 oidc_login_skip_proxy=false
 oidc_login_code_challenge_method="S256"
 enable_previews=true
-enabledPreviewProviders[0]="OC\Preview\PNG"
-enabledPreviewProviders[1]="OC\Preview\JPEG"
-enabledPreviewProviders[2]="OC\Preview\GIF"
-enabledPreviewProviders[3]="OC\Preview\BMP"
-enabledPreviewProviders[4]="OC\Preview\XBitmap"
-enabledPreviewProviders[5]="OC\Preview\Krita"
-enabledPreviewProviders[6]="OC\Preview\WebP"
-enabledPreviewProviders[7]="OC\Preview\MarkDown"
-enabledPreviewProviders[8]="OC\Preview\TXT"
-enabledPreviewProviders[9]="OC\Preview\OpenDocument"
-enabledPreviewProviders[10]="OC\Preview\Movie"
-enabledPreviewProviders[11]="OC\Preview\Imaginary"
-enabledPreviewProviders[12]="OC\Preview\ImaginaryPDF"
-# Careful with HEIC due to: https://github.com/nextcloud/server/pull/28079 -> https://hackerone.com/reports/1261413
-# Imagick provider is completely disabled currently: https://github.com/nextcloud/server/pull/62145 ; https://github.com/nextcloud/server/issues/62546
-# enabledPreviewProviders[13]="OC\Preview\HEIC"
+enabledPreviewProviders[0]="OC\Preview\Imaginary"
+enabledPreviewProviders[1]="OC\Preview\ImaginaryPDF"
+enabledPreviewProviders[2]="OC\Preview\PNG"
+enabledPreviewProviders[3]="OC\Preview\JPEG"
+enabledPreviewProviders[4]="OC\Preview\GIF"
+enabledPreviewProviders[5]="OC\Preview\BMP"
+enabledPreviewProviders[6]="OC\Preview\XBitmap"
+enabledPreviewProviders[7]="OC\Preview\Krita"
+enabledPreviewProviders[8]="OC\Preview\WebP"
+enabledPreviewProviders[9]="OC\Preview\MarkDown"
+enabledPreviewProviders[10]="OC\Preview\TXT"
+enabledPreviewProviders[11]="OC\Preview\OpenDocument"
+enabledPreviewProviders[12]="OC\Preview\Movie"
 preview_imaginary_url="http://${APP_NAME_HOST}_imaginary:9000/"
 EOF
 
