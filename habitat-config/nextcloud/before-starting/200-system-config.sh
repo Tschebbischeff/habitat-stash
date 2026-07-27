@@ -53,7 +53,7 @@ enabledPreviewProviders[8]="OC\Preview\TXT"
 enabledPreviewProviders[9]="OC\Preview\OpenDocument"
 enabledPreviewProviders[10]="OC\Preview\Movie"
 # Careful with HEIC due to: https://github.com/nextcloud/server/pull/28079 -> https://hackerone.com/reports/1261413
-enabledPreviewProviders[10]="OC\Preview\HEIC"
+enabledPreviewProviders[11]="OC\Preview\HEIC"
 EOF
 
 read -r -d '' "DEFAULT_SYSTEM_CONFIG_UNSET" <<EOF || true
