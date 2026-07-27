@@ -32,3 +32,12 @@ The date used in the copyright notices in this file represents the year indicate
 * **Source Code:** https://github.com/nextcloud/docker
 * **License:** [AGPL-3.0-only](https://github.com/nextcloud/docker/blob/master/LICENSE.md)
 * **Copyright Notice:** Copyright (c) 2016, Nextcloud GmbH and Contributors
+
+## Imaginary
+
+* **Project:** https://github.com/h2non/imaginary
+* **Version:** Latest
+* **In use since:** July 2026
+* **Source Code:** https://github.com/h2non/imaginary
+* **License:** [MIT](https://github.com/h2non/imaginary/blob/master/LICENSE)
+* **Copyright Notice:** Copyright (c) 2015, Tomas Aparicio and Contributors

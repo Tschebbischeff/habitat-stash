@@ -117,3 +117,32 @@ services:
     depends_on:
       habitat-config-stash:
         condition: service_completed_successfully
+      imaginary:
+        condition: service_healthy
+
+  imaginary:
+    image: h2non/imaginary:latest
+    container_name: ${APP_NAME_HOST}_imaginary
+    restart: unless-stopped
+    expose:
+      - '9000'
+    env_file:
+      - ./.env
+      - path: ${ENV_DIR}/.env
+        required: false
+      - path: ${ENV_DIR}/imaginary.env
+        required: false
+    environment:
+      PORT: '9000'
+    command: -enable-url-source -concurrency 50
+    networks:
+      internal:
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://127.0.0.1:9000/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    depends_on:
+      habitat-config-stash:
+        condition: service_completed_successfully

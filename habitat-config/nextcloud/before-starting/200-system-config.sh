@@ -52,8 +52,12 @@ enabledPreviewProviders[7]="OC\Preview\MarkDown"
 enabledPreviewProviders[8]="OC\Preview\TXT"
 enabledPreviewProviders[9]="OC\Preview\OpenDocument"
 enabledPreviewProviders[10]="OC\Preview\Movie"
+enabledPreviewProviders[11]="OC\Preview\Imaginary"
+enabledPreviewProviders[12]="OC\Preview\ImaginaryPDF"
 # Careful with HEIC due to: https://github.com/nextcloud/server/pull/28079 -> https://hackerone.com/reports/1261413
-enabledPreviewProviders[11]="OC\Preview\HEIC"
+# Imagick provider is completely disabled currently: https://github.com/nextcloud/server/pull/62145 ; https://github.com/nextcloud/server/issues/62546
+# enabledPreviewProviders[13]="OC\Preview\HEIC"
+preview_imaginary_url="http://${APP_NAME_HOST}_imaginary:9000/"
 EOF
 
 read -r -d '' "DEFAULT_SYSTEM_CONFIG_UNSET" <<EOF || true
