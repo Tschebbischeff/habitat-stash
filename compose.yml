@@ -121,7 +121,7 @@ services:
         condition: service_healthy
 
   imaginary:
-    image: h2non/imaginary:latest
+    image: nextcloud/aio-imaginary:latest
     container_name: ${APP_NAME_HOST}_imaginary
     restart: unless-stopped
     expose:
@@ -134,6 +134,8 @@ services:
         required: false
     environment:
       PORT: '9000'
+    cap_add:
+      - SYS_NICE
     command: -enable-url-source -concurrency 50
     networks:
       internal:

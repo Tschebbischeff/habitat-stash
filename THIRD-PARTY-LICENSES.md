@@ -35,7 +35,7 @@ The date used in the copyright notices in this file represents the year indicate
 
 ## Imaginary
 
-* **Project:** https://github.com/h2non/imaginary
+* **Project:** https://hub.docker.com/r/nextcloud/aio-imaginary
 * **Version:** Latest
 * **In use since:** July 2026
 * **Source Code:** https://github.com/h2non/imaginary
