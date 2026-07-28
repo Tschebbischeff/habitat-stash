@@ -73,7 +73,6 @@ services:
       - path: ${ENV_DIR}/nextcloud.env
         required: false
     environment:
-      TZ: '${TIMEZONE}'
       MYSQL_DATABASE: 'habitat_nextcloud'
       MYSQL_USER: 'nextcloud'
       MYSQL_PASSWORD_FILE: '/run/secrets/NEXTCLOUD_MYSQL_PASSWORD'
