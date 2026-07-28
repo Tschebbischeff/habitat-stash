@@ -13,7 +13,6 @@ volumes:
   nextcloud-main:
   nextcloud-custom_apps:
   nextcloud-config:
-  nextcloud-data:
   nextcloud-themes:
   nextcloud-provisioning:
 
