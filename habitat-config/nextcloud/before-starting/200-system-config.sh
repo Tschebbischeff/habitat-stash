@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 read -r -d '' "DEFAULT_SYSTEM_CONFIG_SET" <<EOF || true
+redis[dbindex]=0
 backgroundjobs_mode="cron"
 skeletondirectory=""
 allow_user_to_change_display_name=false
