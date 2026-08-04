@@ -2,6 +2,7 @@
 
 read -r -d '' "MANDATORY_APP_CONFIG_SET" <<EOF || true
 # appName[cfgName]=cfgValue
+dav[enableDefaultContact]=0
 EOF
 
 read -r -d '' "MANDATORY_APP_CONFIG_UNSET" <<EOF || true
