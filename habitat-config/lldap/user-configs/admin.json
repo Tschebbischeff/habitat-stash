@@ -3,5 +3,5 @@
     "nextcloud_admins",
     "nextcloud_users"
   ],
-  "nextcloud_files_quota": "none"
+  "nextcloud-files-quota": "none"
 }
