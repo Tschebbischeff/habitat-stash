@@ -12,7 +12,7 @@ inArray() {
 
 NEXTCLOUD_CUSTOM_APPS="$MANDATORY_CUSTOM_APPS,$NEXTCLOUD_CUSTOM_APPS"
 declare -a APP_LIST
-mapfile -t APP_LIST < <(printf "%s" "$NEXTCLOUD_CUSTOM_APPS" | sed -E 's/([^\\]),/\1\n/g')
+mapfile -t APP_LIST < <(printf "%s" "$NEXTCLOUD_CUSTOM_APPS" | sed -E 's/([^\\]|^),/\1\n/g')
 for i in "${!APP_LIST[@]}"; do
     APP_LIST[i]="$(echo "${APP_LIST[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done

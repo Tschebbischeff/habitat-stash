@@ -12,7 +12,7 @@ inArray() {
 
 NEXTCLOUD_CUSTOM_GROUPS="$MANDATORY_CUSTOM_GROUPS,$NEXTCLOUD_CUSTOM_GROUPS"
 declare -a GROUP_LIST
-mapfile -t GROUP_LIST < <(printf "%s" "$NEXTCLOUD_CUSTOM_GROUPS" | sed -E 's/([^\\]),/\1\n/g')
+mapfile -t GROUP_LIST < <(printf "%s" "$NEXTCLOUD_CUSTOM_GROUPS" | sed -E 's/([^\\]|^),/\1\n/g')
 for i in "${!GROUP_LIST[@]}"; do
     GROUP_LIST[i]="$(echo "${GROUP_LIST[i]}" | grep -Po '^[ \t]*\K.*[^ \t]')"
 done
