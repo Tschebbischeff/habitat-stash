@@ -3,6 +3,14 @@
 read -r -d '' "MANDATORY_APP_CONFIG_SET" <<EOF || true
 # appName[cfgName]=cfgValue
 dav[enableDefaultContact]=0
+core[shareapi_allow_group_sharing]="no"
+core[shareapi_allow_links]="no"
+core[shareapi_allow_resharing]="no"
+core[shareapi_default_permissions]="7"
+core[shareapi_enabled]="yes"
+core[shareapi_exclude_groups]="no"
+core[shareapi_exclude_groups_list]="[]"
+files[default_quota]="0 B"
 EOF
 
 read -r -d '' "MANDATORY_APP_CONFIG_UNSET" <<EOF || true
