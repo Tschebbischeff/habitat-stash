@@ -1,6 +1,6 @@
 [
   {
-    "name": "nextcloudGroups",
+    "name": "nextcloudgroups",
     "attributeType": "STRING",
     "isEditable": false,
     "isList": true,

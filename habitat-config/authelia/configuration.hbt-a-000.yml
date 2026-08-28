@@ -2,7 +2,7 @@ authentication_backend:
   ldap:
     attributes:
       extra:
-        nextcloudGroups:
+        nextcloudgroups:
           name: 'nextcloud_groups'
           multi_valued: true
           value_type: 'string'
