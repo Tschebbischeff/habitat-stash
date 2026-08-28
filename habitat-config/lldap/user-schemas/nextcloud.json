@@ -1,0 +1,15 @@
+[
+  {
+    "name": "nextcloud-groups",
+    "attributeType": "STRING",
+    "isEditable": false,
+    "isList": true,
+    "isVisible": true
+  }, {
+    "name": "nextcloud-files-quota",
+    "attributeType": "STRING",
+    "isEditable": false,
+    "isList": false,
+    "isVisible": true
+  }
+]

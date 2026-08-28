@@ -1,9 +1,0 @@
-[
-  {
-    "name": "nextcloudgroups",
-    "attributeType": "STRING",
-    "isEditable": false,
-    "isList": true,
-    "isVisible": true
-  }
-]

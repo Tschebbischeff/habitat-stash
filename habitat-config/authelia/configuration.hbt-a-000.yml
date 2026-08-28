@@ -2,9 +2,13 @@ authentication_backend:
   ldap:
     attributes:
       extra:
-        nextcloudgroups:
+        nextcloud-groups:
           name: 'nextcloud_groups'
           multi_valued: true
+          value_type: 'string'
+        nextcloud-files-quota:
+          name: 'nextcloud_files_quota'
+          multi_valued: false
           value_type: 'string'
 
 access_control:
@@ -25,11 +29,13 @@ identity_providers:
         custom_claims:
           is_nextcloud_admin: {}
           nextcloud_groups: {}
+          nextcloud_files_quota: {}
     scopes:
       nextcloud_userinfo:
         claims:
           - 'is_nextcloud_admin'
           - 'nextcloud_groups'
+          - 'nextcloud_files_quota'
     clients:
       - client_id: '${NEXTCLOUD_OAUTH_CLIENT_ID}' # docker run --rm authelia/authelia:latest authelia crypto rand --length 72 --charset rfc3986
         claims_policy: 'nextcloud'

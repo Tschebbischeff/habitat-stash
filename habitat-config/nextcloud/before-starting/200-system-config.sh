@@ -19,6 +19,7 @@ oidc_login_use_id_token=false
 oidc_login_attributes[id]="preferred_username"
 oidc_login_attributes[name]="name"
 oidc_login_attributes[mail]="email"
+oidc_login_attributes[quota]="nextcloud_files_quota"
 oidc_login_attributes[groups]="nextcloud_groups"
 oidc_login_attributes[login_filter]="groups"
 oidc_login_attributes[is_admin]="is_nextcloud_admin"
