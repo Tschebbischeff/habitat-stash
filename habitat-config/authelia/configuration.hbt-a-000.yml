@@ -1,3 +1,12 @@
+authentication_backend:
+  ldap:
+    attributes:
+      extra:
+        nextcloud_groups:
+          name: 'nextcloud_groups'
+          multi_valued: true
+          value_type: 'string'
+
 access_control:
   rules:
     - domain: 'nextcloud.{{ env "APP_HOST" }}'
