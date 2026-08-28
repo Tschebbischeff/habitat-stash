@@ -9,7 +9,7 @@ definitions:
     is_nextcloud_admin:
       expression: '["admins", "nextcloud_admins"].exists(g, g in groups)'
     nextcloud_groups:
-      expression: 'user.attributes.nextcloud_groups'
+      expression: 'nextcloud_groups'
 
 identity_providers:
   oidc: # https://www.authelia.com/integration/openid-connect/frequently-asked-questions/#how-do-i-generate-a-client-identifier-or-client-secret
