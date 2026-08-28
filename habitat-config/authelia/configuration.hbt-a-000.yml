@@ -21,6 +21,8 @@ definitions:
   user_attributes:
     is_nextcloud_admin:
       expression: '["admins", "nextcloud_admins"].exists(g, g in groups)'
+    nextcloud_files_quota_with_default:
+      expression: 'has(nextcloud_files_quota) && nextcloud_files_quota != "" ? nextcloud_files_quota : "0"'
 
 identity_providers:
   oidc: # https://www.authelia.com/integration/openid-connect/frequently-asked-questions/#how-do-i-generate-a-client-identifier-or-client-secret
@@ -29,7 +31,8 @@ identity_providers:
         custom_claims:
           is_nextcloud_admin: {}
           nextcloud_groups: {}
-          nextcloud_files_quota: {}
+          nextcloud_files_quota:
+            attribute: nextcloud_files_quota_with_default
     scopes:
       nextcloud_userinfo:
         claims:
