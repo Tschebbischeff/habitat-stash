@@ -27,13 +27,13 @@ for appConfig in "${APP_CONFIG[@]}"; do
     appArgs="$(echo "$appConfig" | grep -Po '^[^\[]*\K.*$')"
     while [ -n "$appArgs" ]; do
         arg="$(echo "$appArgs" | grep -Po '^\[?\K[^\]]*')"
-        argName="$(echo "$arg" | grep -Po '^[^= "]*')"
-        argValue="$(echo "$arg" | grep -Po '^[^=]*=\K[^"]*$')"
+        argName="$(echo "$arg" | grep -Po '^[^=]*')"
+        argValue="$(echo "$arg" | grep -Po '^[^=]*=\K.*$')"
         if inArray "$argName" "${APP_ARGS_WHITELIST[@]}"; then
             if [ -z "$argValue" ]; then
-                appArgsStr="$appArgsStr --$argName"
+                appArgsStr="$appArgsStr$([ -n "$appArgsStr" ] && printf $'\n')--$argName"
             else
-                appArgsStr="$appArgsStr --$argName \"$argValue\""
+                appArgsStr="$appArgsStr$([ -n "$appArgsStr" ] && printf $'\n')--$argName"$'\n'"$argValue"
             fi
         fi
         appArgs="$(echo "$appArgs" | grep -Po '^\[?[^\]]*\]\K.*')"
@@ -46,22 +46,18 @@ mapfile -t ENABLED_APPS < <(php occ app:list --no-interaction --no-warnings --en
 
 for appId in "${!APP_LIST[@]}"; do
     app="${APP_LIST[$appId]}"
-    appArgs="${APP_ARGS[$appId]}"
+    declare -a appArgs
+    mapfile -t appArgs < <(printf "%s" "${APP_ARGS[$appId]}" | grep -Po '^[ \t]*\K[^ \t]*')
     doEnable=""
     if ! inArray "$app" "${ENABLED_APPS[@]}"; then
         echo "Enabling app '$app'..."
         doEnable="_"
     fi
-    if [ -n "$appArgs" ]; then
-        echo "Setting app arguments for '$app': $appArgs"
+    if [ "${#appArgs[@]}" -gt "0" ]; then
+        echo "Setting app arguments for '$app': ${appArgs[*]}"
         doEnable="_"
     fi
     # shellcheck disable=SC2086  # Word-splitting is intentional
-    [ -n "$doEnable" ] && php occ app:enable --no-interaction $appArgs "$app"
+    [ -n "$doEnable" ] && php occ app:enable --no-interaction "${appArgs[@]}" "$app"
+    unset appArgs
 done
-
-echo "test fixed command for calendar"
-app="calendar"
-appArgs=" --groups \"admin\" --groups \"app_calendar\""
-php occ app:enable --no-interaction $appArgs "$app"
-php occ app:enable --no-interaction --groups "admin" --groups "app_calendar" "calendar"
