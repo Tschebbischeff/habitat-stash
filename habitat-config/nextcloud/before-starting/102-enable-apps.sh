@@ -57,7 +57,6 @@ for appId in "${!APP_LIST[@]}"; do
         echo "Setting app arguments for '$app': ${appArgs[*]}"
         doEnable="_"
     fi
-    # shellcheck disable=SC2086  # Word-splitting is intentional
     [ -n "$doEnable" ] && php occ app:enable --no-interaction "${appArgs[@]}" "$app"
     unset appArgs
 done
