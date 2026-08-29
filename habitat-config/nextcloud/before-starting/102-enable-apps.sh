@@ -31,9 +31,9 @@ for appConfig in "${APP_CONFIG[@]}"; do
         argValue="$(echo "$arg" | grep -Po '^[^=]*=\K.*$')"
         if inArray "$argName" "${APP_ARGS_WHITELIST[@]}"; then
             if [ -z "$argValue" ]; then
-                appArgsStr="$appArgsStr$([ -n "$appArgsStr" ] && printf $'\n')--$argName"
+                appArgsStr="${appArgsStr:+${appArgsStr}$'\n'}$(printf -- '--%s' "$argName")"
             else
-                appArgsStr="$appArgsStr$([ -n "$appArgsStr" ] && printf $'\n')--$argName"$'\n'"$argValue"
+                appArgsStr="${appArgsStr:+${appArgsStr}$'\n'}$(printf -- '--%s\n%s' "$argName" "$argValue")"
             fi
         fi
         appArgs="$(echo "$appArgs" | grep -Po '^\[?[^\]]*\]\K.*')"
