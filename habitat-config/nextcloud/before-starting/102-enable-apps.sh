@@ -33,7 +33,7 @@ for appConfig in "${APP_CONFIG[@]}"; do
             if [ -z "$argValue" ]; then
                 appArgsStr="$appArgsStr --$argName"
             else
-                appArgsStr="$appArgsStr --$argName=\"$argValue\""
+                appArgsStr="$appArgsStr --$argName \"$argValue\""
             fi
         fi
         appArgs="$(echo "$appArgs" | grep -Po '^\[?[^\]]*\]\K.*')"
@@ -47,7 +47,6 @@ mapfile -t ENABLED_APPS < <(php occ app:list --no-interaction --no-warnings --en
 for appId in "${!APP_LIST[@]}"; do
     app="${APP_LIST[$appId]}"
     appArgs="${APP_ARGS[$appId]}"
-    doDisable=""
     doEnable=""
     if ! inArray "$app" "${ENABLED_APPS[@]}"; then
         echo "Enabling app '$app'..."
@@ -55,10 +54,8 @@ for appId in "${!APP_LIST[@]}"; do
     fi
     if [ -n "$appArgs" ]; then
         echo "Setting app arguments for '$app': $appArgs"
-        inArray "$app" "${ENABLED_APPS[@]}" && doDisable="_"
         doEnable="_"
     fi
-    [ -n "$doDisable" ] && php occ app:disable --no-interaction "$app"
     # shellcheck disable=SC2086  # Word-splitting is intentional
     [ -n "$doEnable" ] && php occ app:enable --no-interaction $appArgs "$app"
 done
