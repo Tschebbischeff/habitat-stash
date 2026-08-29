@@ -24,16 +24,16 @@ for appConfig in "${APP_CONFIG[@]}"; do
     [ -n "$appConfig" ] || continue
     APP_LIST[${#APP_LIST[@]}]="$(echo "$appConfig" | grep -Po '^[^\[]*')"
     appArgsStr=""
-    appArgs="$(echo "$appConfig" | grep -Po '^[^\[]*\K.*$' | sed -E 's/\]\[/\]\n\[/g')"
+    appArgs="$(echo "$appConfig" | grep -Po '^[^\[]*\K.*$')"
     while [ -n "$appArgs" ]; do
         arg="$(echo "$appArgs" | grep -Po '^\[?\K[^\]]*')"
-        argName="$(echo "$arg" | grep -Po '[^="]*')"
-        argValue="$(echo "$arg" | grep -Po '[^=]*\K[^"]*$')"
+        argName="$(echo "$arg" | grep -Po '^[^="]*')"
+        argValue="$(echo "$arg" | grep -Po '^[^=]*=\K[^"]*$')"
         if inArray "$argName" "${APP_ARGS_WHITELIST[@]}"; then
             if [ -z "$argValue" ]; then
-                appArgsStr="$appArgsStr \"$argName\""
+                appArgsStr="$appArgsStr \"--$argName\""
             else
-                appArgsStr="$appArgsStr \"$argName=$argValue\""
+                appArgsStr="$appArgsStr \"--$argName=$argValue\""
             fi
         fi
         appArgs="$(echo "$appArgs" | grep -Po '^\[?[^\]]*\]\K.*')"
