@@ -59,3 +59,9 @@ for appId in "${!APP_LIST[@]}"; do
     # shellcheck disable=SC2086  # Word-splitting is intentional
     [ -n "$doEnable" ] && php occ app:enable --no-interaction $appArgs "$app"
 done
+
+echo "test fixed command for calendar"
+app="calendar"
+appArgs=" --groups \"admin\" --groups \"app_calendar\""
+php occ app:enable --no-interaction $appArgs "$app"
+php occ app:enable --no-interaction --groups "admin" --groups "app_calendar" "calendar"
