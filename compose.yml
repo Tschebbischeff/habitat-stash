@@ -120,7 +120,8 @@ services:
         condition: service_healthy
 
   imaginary:
-    image: nextcloud/aio-imaginary:latest
+    build:
+      context: ./imaginary
     container_name: ${APP_NAME_HOST}_imaginary
     restart: unless-stopped
     expose:
@@ -139,7 +140,7 @@ services:
     networks:
       internal:
     healthcheck:
-      test: [ "CMD", "wget", "--spider", "-q", "http://127.0.0.1:9000/health" ]
+      test: [ "CMD", "/healthcheck.sh" ]
       interval: 10s
       timeout: 5s
       retries: 3
