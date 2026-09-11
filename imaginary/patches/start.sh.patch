@@ -1,5 +1,5 @@
---- start.before.sh	2026-09-11 13:39:52.810349823 +0200
-+++ start.after.sh	2026-09-11 13:40:26.657894003 +0200
+--- start.before.sh	2026-09-11 15:25:56.470941337 +0200
++++ start.after.sh	2026-09-11 15:26:44.415540146 +0200
 @@ -1,8 +1,11 @@
  #!/bin/bash
  
@@ -8,14 +8,11 @@
 -    imaginary -return-size -max-allowed-resolution 222.2 "$@"
 -else
 -    imaginary -return-size -max-allowed-resolution 222.2 -key "$IMAGINARY_SECRET" "$@"
--fi
-\ No newline at end of file
 +
 +IMAGINARY_ARGS=(-return-size -max-allowed-resolution 222.2)
 +
 +if [ -n "$IMAGINARY_SECRET" ]; then
 +    IMAGINARY_ARGS+=(-key "$IMAGINARY_SECRET")
-+fi
+ fi
 +
 +exec imaginary "${IMAGINARY_ARGS[@]}" "$@"
-\ No newline at end of file
