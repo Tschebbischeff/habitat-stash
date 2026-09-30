@@ -44,6 +44,7 @@ cat >"$SOURCE_FILE_APP_SITE" <<'EOF'
       data-lib-femon
       data-lib-femon-title="Nextcloud"
       data-lib-femon-url="https://nextcloud.${APP_HOST}"
+      data-lib-femon-check-url="https://status.nextcloud.${APP_HOST}/forward-auth"
       data-lib-femon-hide-codes="403"
       data-lib-femon-icon="/assets/icons/di/nextcloud.svg"
     ></div>
