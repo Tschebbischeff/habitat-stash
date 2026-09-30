@@ -13,6 +13,15 @@ http:
         servers:
           - url: 'http://{{ env "APP_NAME_HOST" }}_nextcloud:7867'
   routers:
+    nextcloud-status-forward-auth:
+      rule: 'Host(`status.nextcloud.{{ env "APP_HOST" }}`) && Path(`/forward-auth`)'
+      service: noop@internal
+      entryPoints: ["websecure"]
+      middlewares:
+        - "cors-policy"
+        - "auth-proxy"
+      tls:
+        certResolver: porkbun-api
     nextcloud-80:
       rule: 'Host(`nextcloud.{{ env "APP_HOST" }}`)'
       priority: 1

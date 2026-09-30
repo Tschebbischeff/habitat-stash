@@ -13,7 +13,7 @@ authentication_backend:
 
 access_control:
   rules:
-    - domain: 'nextcloud.{{ env "APP_HOST" }}'
+    - domain: '*.nextcloud.{{ env "APP_HOST" }}'
       subject: 'group:nextcloud_users'
       policy: one_factor
 
