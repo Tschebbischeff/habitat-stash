@@ -1,4 +1,5 @@
-FROM nextcloud:stable-apache
+ARG NEXTCLOUD_VERSION
+FROM nextcloud:${NEXTCLOUD_VERSION}
 
 ENV NEXTCLOUD_UPDATE=1
 

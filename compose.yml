@@ -61,6 +61,8 @@ services:
   nextcloud:
     build:
       context: ./nextcloud
+      args:
+        NEXTCLOUD_VERSION: "${NEXTCLOUD_VERSION:?}"
     container_name: ${APP_NAME_HOST}_nextcloud
     restart: unless-stopped
     expose:
@@ -122,6 +124,8 @@ services:
   imaginary:
     build:
       context: ./imaginary
+      args:
+        IMAGINARY_VERSION: "${IMAGINARY_VERSION:?}"
     container_name: ${APP_NAME_HOST}_imaginary
     restart: unless-stopped
     expose:

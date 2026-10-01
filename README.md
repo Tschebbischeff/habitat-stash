@@ -101,13 +101,10 @@ SECRETS_DIR="/run/secrets"
 > [!TIP]
 > Some environment variables are used commonly throughout all modules, you can check the list [here](https://github.com/Tschebbischeff/habitat#environment-variables-for-modules).
 
-*This module does not require any additional environment variables.*
-
-<!--
 | Name | Description | Example | Default |
 | :-- | :-- | :-- | :-- |
-| `EXAMPLE` | An example description. | `some-value` | *Empty* |
--->
+| `NEXTCLOUD_VERSION` | Tag for the [Nextcloud docker image](https://hub.docker.com/_/nextcloud). | `apache` | `stable-apache` |
+| `IMAGINARY_VERSION` | Tag for the [Nextcloud AIO Imaginary docker image](https://hub.docker.com/r/nextcloud/aio-imaginary). | `20250905_100617` | `latest` |
 
 ### Secrets
 
