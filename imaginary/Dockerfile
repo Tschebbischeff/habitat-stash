@@ -1,5 +1,5 @@
 ARG IMAGINARY_VERSION
-FROM nextcloud/aio-imaginary:${IMAGINARY_VERSION}
+FROM nextcloud/aio-imaginary:${IMAGINARY_VERSION:?}
 
 USER root:root
 
